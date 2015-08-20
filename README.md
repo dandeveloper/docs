@@ -1,26 +1,40 @@
-# VTEX Apps Docs
+# Tortin Theme
+[Live Demo and Docs](http://vtex.github.io/tortin)
 
-1. Apps e Gallery
-  1. Toolbelt
-    1. Sandbox
-    2. Watch
-    3. Publish
-2. Storefront
-  1. Estrutura de uma app
-  2. Tecnologias
-  3. App de tema e componentes
-  4. Storefront SDK
-  5. Desenvolvendo um app de componente
-    1. Criando um componente
-    2. Definindo uma rota
-    3. Registrando um componente
-  4. Desenvolvendo uma app de tema do zero
-    1. layout.html
-    2. Rotas default
-    3. Areas
-    4. Roles
-  4. Avançado
-    1. Resources
-  5. Referência
-    1. Lista de Areas
-    2. Lista de Roles
+## Screenshots
+![Screenshot](https://i.imgur.com/BcDPRiZ.png)
+
+![Screenshot red](https://i.imgur.com/rwcjQHm.png)
+
+![Screenshot green](https://i.imgur.com/U1LWOdi.png)
+
+![Screenshot black](https://i.imgur.com/tyaj8aC.png)
+
+Tortin is a Bootstrap 3 based theme for [GitHub Pages](http://pages.github.com/) with four color options.
+
+## Download
+[Get the compiled version](https://github.com/vtex/tortin/archive/gh-pages.zip)
+
+[Get the compiled version with customized color]  **SOON**
+
+## Running
+Download repo files and run `npm i` and then `grunt`.
+
+### Chosing a color
+Just open the `variables.less` file in `css` folder and choose between colors editing the comments lines:
+
+```less
+// ##############################################
+// Choose color theme
+// ##############################################
+@bg-hero:  @lab-blue; //Blue Default
+// @bg-hero:  @lab-red; //Cute Red
+// @bg-hero:  @lab-green; //Fresh Green
+// @bg-hero:  @lab-black; //Gentle Dark
+```
+
+## License
+
+Code licensed under [Apache License v2.0](http://www.apache.org/licenses/LICENSE-2.0) and documentation under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/).
+
+Designed and maintained by [VTEX Lab](http://lab.vtex.com/) and contributors
