@@ -48,22 +48,23 @@
 
       ## Índice
 
-      <ul>
-          <li><a href="#intro">0.0 Intro</a></li>
-          <li><a href="#apps">1.0 Apps</a></li>
-          <li><a href="#basico">1.1 Aprenda o Básico</a></li>
-          <li><a href="#desenvolvendo-um-tema">1.2 Desenvolvendo uma App de Tema do Zero</a></li>
-          <li><a href="#guias">2.0 Guias</a></li>
-          <li><a href="#tecnologias">2.1 Tecnologias</a></li>
-          <li><a href="#app-de-tema-e-componentes">2.2 App de tema e componentes</a></li>
-          <li><a href="#resources">2.4 Resources</a></li>
-          <li><a href="#storefront-sdk">3.0 Storefront SDK</a></li>
-          <li><a href="#tools">4.0 Tools</a></li>
-          <li><a href="#tools">4.1 Toolbelt</a></li>
-          <li><a href="#references">5.0 References</a></li>
-          <li><a href="#lista-de-areas">5.1 Lista de Áreas</a></li>
-          <li><a href="#lista-de-roles">5.2 Lista de Roles</a></li>
-          <li><a href="#lista-de-resources-vtex">5.3 Lista de Resources VTEX</a></li>
+      <ul class="doc_toc">
+          <li><a href="#intro"><span>0.0</span> Intro</a></li>
+          <li><a href="#apps"><span>1.0</span> Apps</a></li>
+          <li><a href="#app-architecture"><span>1.1</span>App Architecture</a></li>
+          <li><a href="#basico"><span>1.2</span> Aprenda o Básico</a></li>
+          <li><a href="#desenvolvendo-um-tema"><span>1.3</span> Desenvolvendo uma App de Tema do Zero</a></li>
+          <li><a href="#guias"><span>2.0</span> Guias</a></li>
+          <li><a href="#tecnologias"><span>2.1</span> Tecnologias</a></li>
+          <li><a href="#app-de-tema-e-componentes"><span>2.2</span> App de tema e componentes</a></li>
+          <li><a href="#resources"><span>2.4</span> Resources</a></li>
+          <li><a href="#storefront-sdk"><span>3.0</span> Storefront SDK</a></li>
+          <li><a href="#tools"><span>4.0</span> Tools</a></li>
+          <li><a href="#toolbelt"><span>4.1</span> Toolbelt</a></li>
+          <li><a href="#references"><span>5.0</span> References</a></li>
+          <li><a href="#lista-de-areas"><span>5.1</span> Lista de Áreas</a></li>
+          <li><a href="#lista-de-roles"><span>5.2</span> Lista de Roles</a></li>
+          <li><a href="#lista-de-resources-vtex"><span>5.3</span> Lista de Resources VTEX</a></li>
       </ul>
 
     </section>
@@ -108,6 +109,95 @@
 
     <p>A VTEX Gallery permite que desenvolvedores e agências publiquem apps — gratuitos ou pagos — que podem ser facilmente encontrados e instalados por lojistas da VTEX.</p>
     <p>Apps disponibilizados na Gallery são mais poderosos que as antigas extensões da VTEX Store, pois oferecem funcionalidades que podem interagir com todos os sistemas da VTEX.</p>
+
+  </div>
+</div>
+
+<hr>
+
+<div class="row" id="app-architecture">
+  <div class="col-md-offset-2 col-md-7" data-markdown>
+
+
+    ## App Architecture
+
+    Uma app no Storefront é estruturada da seguinte maneira:
+
+    ```
+    .
+    ├── storefront/
+    │   ├── assets/
+    │   ├── components/
+    │   ├── resources/
+    │   └── layout.html
+    └── meta.json
+    ```
+
+    ### Assets
+
+    Nessa pasta estão todos os arquivos estáticos necessários para a app. Isso inclui: arquivos Javascript, CSS, imagens, fontes, etc.
+
+    ### Components
+
+    Nessa pasta moram arquivos de definição de componentes que respondem por uma rota.
+
+    Exemplo de um arquivo chamado `ProductPage.json`:
+
+<pre>
+<code>
+{
+ "route": {
+   "name": "product",
+   "path": "/:slug/p"
+ },
+ "resourceBinding": {
+   "locator": "product@vtex.storefront-sdk",
+   "params": {
+     "slug": "{{ route.slug }}"
+   }
+ },
+ "assets": [
+   "storefront-theme.js",
+   "editor/storefront-theme.js"
+ ],
+ "exports": {
+   "product": "{{ route.params.slug }}"
+ }
+}
+</code>
+</pre>
+
+    <p>A rota deve sempre conter <code>name</code> e <code>path</code>, seguindo os moldes do React Router, componente React usado internamente para roteamento da aplicação.</p>
+
+    <p>O parâmetro <code>resourceBinding</code> define o <code>resource</code> que deve ser carregado no lado do servidor. Muitas vezes esse modelo precisa de um parâmetro da rota, como mostrado no exemplo. Carregar os dados do lado do servidor permite com que os componentes consigam renderizar conteúdo que pode ser parseado pelo Google.</p>
+
+    <p>Os dados carregados ficam disponíveis na variável global na página chamada <code>window.storefront.currentRoute.resources</code>.</p>
+
+    <p>Por fim, o parâmetro <code>assets</code> define quais arquivos dentro da pasta <code>assets</code> são necessários para renderizar essa página.</p>
+
+    ### Resources
+
+    <p>Resources definem a configuração de um dado que deve ser requisitado pelo servidor. Ele pode receber alguns parâmetros definidos pela rota.</p>
+
+    <p>Exemplo de um arquivo chamado <code>product.json</code>:</p>
+
+    ```json
+    {
+      "url": "http://api.beta.vtex.com/:account/products/:slug",
+      "cacheDuration": 60,
+      "parameters": {
+        "account": "{{ account.name }}"
+      },
+      "queryString": {
+        "query": "{{ parameters.query }}"
+      }
+    }
+    ```
+
+    ### layout.html
+
+    <p>Esse arquivo é necessário apenas caso seja uma app de tema. Ele define o HTML base de sua loja. Use o arquivo <code>layout.html</code> do storefront-theme como padrão. Em raros casos deve ser necessário alterá-lo.</p>
+
 
     </div>
   </div>
