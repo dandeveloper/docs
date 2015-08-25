@@ -1,8 +1,8 @@
 {
-  "name": "tortin",
+  "name": "storefront-docs",
   "version": "0.1.1",
   "paths": [
-    "/tortin"
+    "/docs"
   ],
   "deploy": "deploy/",
   "devDependencies": {
@@ -25,6 +25,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/vtex/tortin.git"
+    "url": "git://github.com/vtex-apps/docs.git"
   }
 }
